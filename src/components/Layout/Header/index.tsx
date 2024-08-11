@@ -1,8 +1,22 @@
 import { MdOutlineSearch } from "react-icons/md";
 import { FaRegBell } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { RootState } from "../../../types/User";
+import { useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebase";
 
 const Header = () => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <div className="shadow-five-percent bg-white">
@@ -26,15 +40,28 @@ const Header = () => {
             </button>
           </form>
           <div className="flex items-center gap-9">
-            <button>
+            <button className="w-8 h-8 flex justify-center items-center rounded-full hover:bg-gray-100">
               <FaRegBell size={24} />
             </button>
-            <Link to={"/login"}>
-              <p>로그인</p>
-            </Link>
-            <Link to={"/signup"}>
-              <p>회원가입</p>
-            </Link>
+            {currentUser.isLogin ? (
+              <>
+                <Link to={"/mypage/edit"}>
+                  <p>마이페이지</p>
+                </Link>
+                <p className="cursor-pointer" onClick={handleLogout}>
+                  로그아웃
+                </p>
+              </>
+            ) : (
+              <>
+                <Link to={"/login"}>
+                  <p>로그인</p>
+                </Link>
+                <Link to={"/signup"}>
+                  <p>회원가입</p>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
