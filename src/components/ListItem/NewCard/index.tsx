@@ -1,23 +1,43 @@
-const NewCard = () => {
+import { Link } from "react-router-dom";
+import useMemberCount from "../../../hooks/useMemberCount";
+import { MoimObjectType } from "../../../types/Moim";
+import { FaLocationDot } from "react-icons/fa6";
+import { BsCalendarDateFill } from "react-icons/bs";
+
+const NewCard = ({ moim }: { moim: MoimObjectType }) => {
+  const date = moim.moimDate.split(" ");
+  const location = moim.moimLocation.split(" ");
   return (
     <>
-      <div className="h-32 flex rounded-2xl bg-white">
-        <div className="w-64 bg-theme-color-002 rounded-l-2xl"></div>
-        <div className="flex-1 flex flex-col pl-8 justify-center">
-          <p className="text-2xl font-bold">
-            야구 경기 같이 보러가실 KT위즈 팬 모임
-          </p>
-          <p className="text-custom-gray-002">모임일 24.08.08</p>
-          <p className="text-xl text-theme-main-color font-semibold mt-3">
-            현재 모임 인원 1/4
-          </p>
+      <Link to={`/moim/${moim.moimId}`}>
+        <div className="h-32 flex rounded-2xl bg-white shadow">
+          {moim.moimPhoto ? (
+            <img
+              src={moim.moimPhoto}
+              alt="moim_photo"
+              className="w-64 bg-theme-color-002 rounded-l-2xl object-cover"
+            />
+          ) : (
+            <div className="w-64 bg-theme-color-002 rounded-l-2xl"></div>
+          )}
+          <div className="flex-1 flex flex-col pl-8 justify-center">
+            <p className="text-2xl font-bold">{moim.moimTitle}</p>
+            <div className="flex text-custom-gray-002 gap-2">
+              <div className="flex items-center gap-1">
+                <BsCalendarDateFill />
+                <p>{date[0]}</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <FaLocationDot />
+                <p>{location[0] + " " + location[1]}</p>
+              </div>
+            </div>
+            <p className="text-xl text-theme-main-color font-semibold mt-3">
+              현재 모임 인원 {useMemberCount(moim.moimId)}/{moim.moimMemberNum}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center mx-5">
-          <button className="px-4 py-3 bg-theme-main-color text-white font-semibold rounded-lg">
-            모임 상세보기
-          </button>
-        </div>
-      </div>
+      </Link>
     </>
   );
 };
