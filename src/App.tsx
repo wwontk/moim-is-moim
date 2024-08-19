@@ -15,6 +15,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "./store/userSlice";
+import MoimDetailPage from "./pages/MoimDetailPage";
+import CreateMoimPage from "./pages/CreateMoimPage";
+import UpdateMoimPage from "./pages/UpdateMoimPage";
+import MoimChattingPage from "./pages/MoimChattingPage";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +51,12 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/moim/create" element={<CreateMoimPage />}></Route>
+          <Route path="/moim/:moimid" element={<MoimDetailPage />}></Route>
+          <Route
+            path="/moim/:moimid/update"
+            element={<UpdateMoimPage />}
+          ></Route>
         </Route>
         <Route element={<MyPageLayout />}>
           <Route path="/mypage/edit" element={<EditPage />}></Route>
@@ -61,6 +71,7 @@ function App() {
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/moim/:moimid/chat" element={<MoimChattingPage />}></Route>
       </Routes>
     </>
   );
