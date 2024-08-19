@@ -10,7 +10,7 @@ const CategoryList = () => {
   const categoryItem = [
     {
       id: 1,
-      path: "/",
+      path: "/category/sports",
       icon: (
         <MdOutlineSportsTennis size={70} className="text-theme-main-color" />
       ),
@@ -18,13 +18,13 @@ const CategoryList = () => {
     },
     {
       id: 2,
-      path: "/",
+      path: "/category/food",
       icon: <IoFastFoodOutline size={70} className="text-theme-main-color" />,
       title: "맛집",
     },
     {
       id: 3,
-      path: "/",
+      path: "/category/game",
       icon: (
         <IoGameControllerOutline size={70} className="text-theme-main-color" />
       ),
@@ -32,19 +32,19 @@ const CategoryList = () => {
     },
     {
       id: 4,
-      path: "/",
+      path: "/category/play",
       icon: <SiPlaywright size={70} className="text-theme-main-color" />,
       title: "문화/예술",
     },
     {
       id: 5,
-      path: "/",
+      path: "/category/study",
       icon: <FaBookOpen size={70} className="text-theme-main-color" />,
       title: "스터디",
     },
     {
       id: 6,
-      path: "/",
+      path: "/category/etc",
       icon: (
         <HiChatBubbleLeftEllipsis size={70} className="text-theme-main-color" />
       ),
@@ -56,7 +56,7 @@ const CategoryList = () => {
       <div className="flex justify-between">
         {categoryItem.map((item) => (
           <Link to={item.path} key={item.id}>
-            <div className="w-36 h-36 rounded-2xl shadow-sm flex flex-col justify-center items-center">
+            <div className="w-36 h-36 rounded-2xl shadow flex flex-col justify-center items-center">
               <p>{item.icon}</p>
               <p className="mt-5 text-theme-main-color font-bold">
                 {item.title}
