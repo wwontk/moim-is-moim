@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import MemberProfile from "../../components/common/MemberProfile";
-import { child, off, onValue, ref, update } from "firebase/database";
+import { child, increment, off, onValue, ref, update } from "firebase/database";
 import { database } from "../../firebase";
 import { useCallback, useEffect, useState } from "react";
 import { MemberObjectType, MoimObjectType } from "../../types/Moim";
@@ -22,6 +22,18 @@ const MoimDetailPage = () => {
 
   const [isMoimMember, setIsMoimMember] = useState(false);
   const [isWaitingMember, setIsWaitingMember] = useState(false);
+
+  useEffect(() => {
+    if (moimid) {
+      const moimRef = child(ref(database, "moims"), moimid);
+
+      update(moimRef, {
+        views: increment(1),
+      }).catch((error) => {
+        console.error("Error:", error);
+      });
+    }
+  }, [moimid]);
 
   useEffect(() => {
     setIsMoimMember(member.some((m) => m.uid === currentUser.uid));

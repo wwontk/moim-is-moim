@@ -138,6 +138,7 @@ const CreateMoimPage = () => {
           },
         },
         createdAt: new Date().toISOString(),
+        views: 0,
       });
     } catch (error) {
       console.error(error);

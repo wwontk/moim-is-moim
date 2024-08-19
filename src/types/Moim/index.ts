@@ -10,6 +10,7 @@ export interface MoimObjectType {
   moimTitle: string;
   moimId: string;
   moimMemberNum: string;
+  views: number;
 }
 
 export interface MemberObjectType {
