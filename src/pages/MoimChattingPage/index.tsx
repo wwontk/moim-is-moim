@@ -1,4 +1,11 @@
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoIosSend } from "react-icons/io";
@@ -40,6 +47,14 @@ const MoimChattingPage = () => {
   const [detail, setDetail] = useState<MoimObjectType>();
 
   const messagesRef = useMemo(() => ref(database, "chat"), []);
+
+  const messageEndRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 
   const createMessage = () => {
     const message = {
@@ -148,6 +163,7 @@ const MoimChattingPage = () => {
           </div>
           <div className="my-20 p-3 flex flex-col gap-3">
             {renderMessages(messages)}
+            <div ref={messageEndRef}></div>
           </div>
           <div className="w-[1000px] h-20 bg-white fixed bottom-0 rounded-t-xl shadow flex items-center">
             <form
