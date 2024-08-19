@@ -40,7 +40,7 @@ const CategoryNav = () => {
   ];
   return (
     <>
-      <nav className="h-20 flex gap-8 items-center bg-white rounded-2xl border-2 pl-9 my-10">
+      <nav className="h-20 flex gap-8 items-center bg-white rounded-2xl border-2 pl-9 mt-10">
         {navItem.map((item) => (
           <NavLink
             key={item.id}
@@ -48,7 +48,7 @@ const CategoryNav = () => {
             className={({ isActive }) =>
               isActive
                 ? "text-theme-main-color font-semibold"
-                : "text-custom-gray-002"
+                : "text-custom-gray-002 hover:underline hover:underline-offset-2"
             }
           >
             {item.title}
