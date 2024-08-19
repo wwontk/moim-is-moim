@@ -2,43 +2,13 @@ import { Link } from "react-router-dom";
 import CategoryList from "../../components/common/CategoryList";
 import NewCard from "../../components/ListItem/NewCard";
 import PopularCard from "../../components/ListItem/PopularCard";
-import { useEffect, useMemo, useState } from "react";
 import { MoimObjectType } from "../../types/Moim";
-import { get, limitToLast, orderByChild, query, ref } from "firebase/database";
-import { database } from "../../firebase";
 import useTopMoimsByViews from "../../hooks/useTopMoimsByViews";
+import useGetNewMoims from "../../hooks/useGetNewMoims";
 
 const HomePage = () => {
-  const [newMoims, setNewMoims] = useState<MoimObjectType[]>([]);
+  const newMoims = useGetNewMoims();
   const topMoims = useTopMoimsByViews();
-
-  const moimsQuery = useMemo(() => {
-    const moimsRef = ref(database, "moims");
-    return query(moimsRef, orderByChild("createdAt"), limitToLast(2));
-  }, []);
-
-  useEffect(() => {
-    const fetchLatestMoims = async () => {
-      try {
-        const snapshot = await get(moimsQuery);
-        if (snapshot.exists()) {
-          const moimList: MoimObjectType[] = Object.keys(snapshot.val()).map(
-            (key) => ({
-              moimId: key,
-              ...snapshot.val()[key],
-            })
-          );
-          setNewMoims(moimList);
-        } else {
-          setNewMoims([]); // 데이터가 없을 때 빈 배열 설정
-        }
-      } catch (error) {
-        console.error("Error fetching latest moims:", error);
-      }
-    };
-
-    fetchLatestMoims();
-  }, [moimsQuery]);
 
   const renderNewMoims = (moims: MoimObjectType[]) => {
     return (
