@@ -13,7 +13,7 @@ interface AlarmType {
   msg: string;
 }
 
-interface AlarmWithKey {
+export interface AlarmWithKey {
   id: string; // 알람의 key값
   data: AlarmType; // 알람 데이터
 }
