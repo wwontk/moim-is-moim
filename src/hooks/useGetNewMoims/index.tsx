@@ -22,7 +22,7 @@ const useGetNewMoims = () => {
               ...snapshot.val()[key],
             })
           );
-          setNewMoims(moimList);
+          setNewMoims(moimList.reverse());
         } else {
           setNewMoims([]); // 데이터가 없을 때 빈 배열 설정
         }

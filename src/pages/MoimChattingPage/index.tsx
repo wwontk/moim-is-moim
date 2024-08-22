@@ -153,11 +153,16 @@ const MoimChattingPage = () => {
               className="cursor-pointer"
             />
             <div className="flex items-center gap-4">
-              <img
-                src={detail?.moimPhoto}
-                alt=""
-                className="w-14 h-14 object-cover rounded-full"
-              />
+              {detail?.moimPhoto ? (
+                <img
+                  src={detail?.moimPhoto}
+                  alt=""
+                  className="w-14 h-14 object-cover rounded-full"
+                />
+              ) : (
+                <div className="w-14 h-14 bg-theme-color-002 rounded-full"></div>
+              )}
+
               <p className="text-xl font-semibold">{detail?.moimTitle}</p>
             </div>
           </div>

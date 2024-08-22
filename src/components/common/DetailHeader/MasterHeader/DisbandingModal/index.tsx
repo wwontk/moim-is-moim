@@ -1,32 +1,50 @@
 import ReactModal from "react-modal";
 import { disbandingModalStyle } from "../../../../../styles/ModalStyle";
 import useInput from "../../../../../hooks/useInput";
-import { ref, remove } from "firebase/database";
+import { push, ref, remove } from "firebase/database";
 import { database } from "../../../../../firebase";
 import { useNavigate } from "react-router-dom";
+import useGetMoimMember from "../../../../../hooks/useGetMoimMember";
+import { MoimObjectType } from "../../../../../types/Moim";
 
 interface DisbandingModalProps {
   moimid: string | undefined;
   isDisbandingModalOpen: boolean;
   setIsDisbandingModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  detail: MoimObjectType;
 }
 
 const DisbandingModal: React.FC<DisbandingModalProps> = ({
   moimid,
   isDisbandingModalOpen,
   setIsDisbandingModalOpen,
+  detail,
 }) => {
   const navigate = useNavigate();
   const [reasonText, , handleChangeReasonText] = useInput("");
+
+  const members = useGetMoimMember(String(moimid));
 
   const closeModal = () => {
     setIsDisbandingModalOpen(false);
   };
 
   const handleDisbandMoim = async () => {
+    const newAlarmData = {
+      type: "disband",
+      msg: `모임장이 모임을 해체하였습니다. [사유] ${reasonText}`,
+      moimTitle: detail.moimTitle,
+      moimPhoto: detail.moimPhoto,
+      moimId: moimid,
+      createdAt: new Date().toISOString(),
+    };
+    for (let i = 0; i < members.length; i++) {
+      await push(ref(database, `users/${members[i]}/alarm`), newAlarmData);
+    }
     await remove(ref(database, `moims/${moimid}`));
     navigate("/", { replace: true });
   };
+
   return (
     <>
       <ReactModal

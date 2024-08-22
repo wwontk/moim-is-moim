@@ -9,9 +9,11 @@ import { GoAlertFill } from "react-icons/go";
 const CategoryItemPage = () => {
   const { categoryItem } = useParams();
   const [moims, setMoims] = useState<MoimObjectType[]>([]);
+  const [sortedOption, setSortedOption] = useState<string>("all");
 
   useEffect(() => {
     const moimsRef = ref(database, "moims");
+
     const cateQuery = query(
       moimsRef,
       orderByChild("moimCate"),
@@ -27,6 +29,12 @@ const CategoryItemPage = () => {
             moimId: key, // key를 moimId로 추가
           };
         });
+
+        if (sortedOption === "popular") {
+          moimList.sort((a, b) => b.views - a.views);
+        } else if (sortedOption === "new") {
+          moimList.sort((a, b) => b.createdAt - a.createdAt).reverse();
+        }
         setMoims(moimList);
       } else {
         setMoims([]);
@@ -35,7 +43,11 @@ const CategoryItemPage = () => {
 
     // 컴포넌트 언마운트 시 리스너 제거
     return () => unsubscribe();
-  }, [categoryItem]);
+  }, [categoryItem, sortedOption]);
+
+  const handleSortedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortedOption(e.target.value);
+  };
 
   const renderMoims = (moims: MoimObjectType[]) => {
     return (
@@ -53,10 +65,12 @@ const CategoryItemPage = () => {
             name="sort"
             id="sort"
             className="w-28 py-[10px] px-4 border-2 rounded-xl"
+            onChange={handleSortedChange}
+            value={sortedOption}
           >
+            <option value="all">전체</option>
             <option value="popular">인기순</option>
             <option value="new">최신순</option>
-            <option value="deadline">마감순</option>
           </select>
         </div>
         <div className={`flex flex-wrap gap-8 items-center`}>
