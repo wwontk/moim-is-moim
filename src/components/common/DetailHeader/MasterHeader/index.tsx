@@ -21,6 +21,7 @@ const MasterHeader: React.FC<MasterHeaderProps> = ({
   waitingMember,
   moimid,
   moimMasterId,
+  detail,
 }) => {
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [isDisbandingModalOpen, setIsDisbandingModalOpen] = useState(false);
@@ -42,6 +43,7 @@ const MasterHeader: React.FC<MasterHeaderProps> = ({
           moimMasterId={moimMasterId}
           isMemberModalOpen={isMemberModalOpen}
           setIsMemberModalOpen={setIsMemberModalOpen}
+          detail={detail}
         />
         <div
           className="flex flex-col gap-2 items-center relative"
@@ -75,6 +77,7 @@ const MasterHeader: React.FC<MasterHeaderProps> = ({
           moimid={moimid}
           isDisbandingModalOpen={isDisbandingModalOpen}
           setIsDisbandingModalOpen={setIsDisbandingModalOpen}
+          detail={detail}
         />
         <div
           className="flex flex-col gap-2 items-center"

@@ -1,8 +1,8 @@
 import ReactModal from "react-modal";
 
 import { useState } from "react";
-import { MemberObjectType } from "../../../../../types/Moim";
-import { ref, remove, update } from "firebase/database";
+import { MemberObjectType, MoimObjectType } from "../../../../../types/Moim";
+import { push, ref, remove, update } from "firebase/database";
 import { database } from "../../../../../firebase";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
@@ -15,6 +15,7 @@ interface MasterHeaderProps {
   moimMasterId: string;
   isMemberModalOpen: boolean;
   setIsMemberModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  detail: MoimObjectType;
 }
 
 const MemberModal: React.FC<MasterHeaderProps> = ({
@@ -24,6 +25,7 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
   moimMasterId,
   isMemberModalOpen,
   setIsMemberModalOpen,
+  detail,
 }) => {
   const [isMemberList, setIsMemberList] = useState(true);
 
@@ -37,6 +39,16 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
       name: member.name,
       uid: member.uid,
     };
+    const newAlarmData = {
+      type: "welcome",
+      msg: "모임에 가입되셨습니다. 모임원들과 즐거운 시간 보내세요!🎉",
+      moimTitle: detail.moimTitle,
+      moimPhoto: detail.moimPhoto,
+      moimId: moimid,
+      createdAt: new Date().toISOString(),
+    };
+
+    await push(ref(database, `users/${member.uid}/alarm`), newAlarmData);
     await update(ref(database, `moims/${moimid}/moimMember`), {
       [member.uid]: newWaitingMember,
     });
