@@ -9,10 +9,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { setPhotoURL, setUser } from "../../../store/userSlice";
-import { update, ref as dbref } from "firebase/database";
+import { update, ref as dbref, onValue } from "firebase/database";
 import { md5 } from "js-md5";
 import useInput from "../../../hooks/useInput";
 import { useEffect, useState } from "react";
+import { area } from "../../../data/area";
+import { years } from "../../../data/age";
 
 const EditPage = () => {
   const dispatch = useDispatch();
@@ -168,18 +170,72 @@ const EditPage = () => {
 
     const credential = EmailAuthProvider.credential(
       String(user.email),
-      password
+      String(password)
     );
 
     await reauthenticateWithCredential(user, credential)
       .then(() => {
-        updatePassword(user, newPassword)
+        updatePassword(user, String(newPassword))
           .then(() => {})
           .catch((error) => console.error(error));
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+
+  const districts = area.find((area) => area.city === city)?.district || [];
+
+  useEffect(() => {
+    const fetchUserOptions = async () => {
+      try {
+        if (currentUser?.uid) {
+          const userOptionRef = dbref(
+            database,
+            `users/${currentUser.uid}/option`
+          );
+          const unsubscribe = onValue(userOptionRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              setAge(data.age || "");
+              setGender(data.gender || "");
+              setCity(data.city || "");
+              setDistrict(data.district || "");
+            }
+          });
+          return () => unsubscribe();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUserOptions();
+  }, [currentUser.uid]);
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCity(e.target.value);
+    setDistrict("");
+  };
+
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDistrict(e.target.value);
+  };
+
+  const handleSubmitOptional = async () => {
+    const newOptionData = {
+      age: age,
+      gender: gender,
+      city: city,
+      district: district,
+      residence: `${city} ${district}`,
+    };
+    const userOptionRef = dbref(database, `users/${currentUser.uid}/option`);
+    await update(userOptionRef, newOptionData);
   };
 
   return (
@@ -303,18 +359,28 @@ const EditPage = () => {
             <select
               name="age"
               id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
               className="w-full border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
             >
-              <option value="2001">2001</option>
+              <option value="">연령 선택</option>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
             </select>
           </div>
           <div className="w-80 h-36 bg-white rounded-2xl p-7 shadow">
             <p className="text-custom-gray-003 text-sm">성별</p>
             <select
-              name="sex"
-              id="sex"
+              name="gender"
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
               className="w-full border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
             >
+              <option value="">성별 선택</option>
               <option value="male">남성</option>
               <option value="female">여성</option>
             </select>
@@ -323,25 +389,42 @@ const EditPage = () => {
             <p className="text-custom-gray-003 text-sm">거주 지역</p>
             <div className="flex gap-2">
               <select
-                name="first-add"
-                id="first-add"
-                className="border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
+                name="city"
+                id="city"
+                value={city}
+                onChange={handleCityChange}
+                className="w-1/2 border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
               >
-                <option value="male">서울</option>
-                <option value="female">경기도</option>
+                <option value="">지역 선택</option>
+                {area.map((area) => (
+                  <option key={area.city} value={area.city}>
+                    {area.city}
+                  </option>
+                ))}
               </select>
-              <select
-                name="second-add"
-                id="second-add"
-                className="flex-1 border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
-              >
-                <option value="male">강남구</option>
-                <option value="female">수원시</option>
-              </select>
+              {city && (
+                <select
+                  name="district"
+                  id="district"
+                  value={district}
+                  onChange={handleDistrictChange}
+                  className="w-1/2 border-2 rounded text-custom-gray-002 p-3 focus:outline-none mt-6"
+                >
+                  <option value="">시,군,구 선택</option>
+                  {districts.map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           </div>
         </div>
-        <button className="border-2 h-10 rounded-md text-custom-gray-004 px-3 bg-white my-5">
+        <button
+          className="border-2 h-10 rounded-md text-custom-gray-004 px-3 bg-white my-5"
+          onClick={handleSubmitOptional}
+        >
           개인정보 저장
         </button>
       </div>
