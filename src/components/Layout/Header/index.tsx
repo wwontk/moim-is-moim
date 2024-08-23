@@ -8,6 +8,7 @@ import { auth, database } from "../../../firebase";
 import { useEffect, useRef, useState } from "react";
 import useGetAlarm from "../../../hooks/useGetAlarm";
 import { ref, remove } from "firebase/database";
+import AlarmList from "../../common/AlarmList";
 
 const Header = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -44,6 +45,7 @@ const Header = () => {
 
   const handleDeleteAlarm = async (key: string) => {
     await remove(ref(database, `users/${currentUser.uid}/alarm/${key}`));
+    setIsPopupVisible(false);
   };
 
   return (
@@ -75,53 +77,19 @@ const Header = () => {
                 onClick={togglePopup}
               >
                 <FaRegBell size={24} />
+                {alarms.length > 0 && (
+                  <div className="w-2 h-2 bg-red-600 rounded-full absolute top-0 right-0"></div>
+                )}
               </button>
               {isPopupVisible && (
                 <div className="absolute z-50 top-10 -right-5 w-[350px] bg-white border border-gray-200 rounded-lg shadow-lg p-5">
                   <div>
                     <p className="font-semibold text-xl mb-3">알림</p>
                     <div className="flex flex-col gap-3">
-                      {alarms.map((alarm, index) =>
-                        alarm.data.type === "welcome" ? (
-                          <Link to={`/moim/${alarm.data.moimId}`}>
-                            <div
-                              key={index}
-                              className="flex flex-col gap-1 shadow p-3 rounded"
-                              onClick={() => {
-                                handleDeleteAlarm(alarm.id);
-                              }}
-                            >
-                              <div className="flex gap-2 items-center">
-                                <img
-                                  src={alarm.data.moimPhoto}
-                                  alt={`moim_photo`}
-                                  className="w-7 h-7 rounded-full object-cover"
-                                />
-                                <p>{alarm.data.moimTitle}</p>
-                              </div>
-                              <div>{alarm.data.msg}</div>
-                            </div>
-                          </Link>
-                        ) : (
-                          <div
-                            key={index}
-                            className="flex flex-col gap-1 shadow p-3 rounded"
-                            onClick={() => {
-                              handleDeleteAlarm(alarm.id);
-                            }}
-                          >
-                            <div className="flex gap-2 items-center">
-                              <img
-                                src={alarm.data.moimPhoto}
-                                alt={`moim_photo`}
-                                className="w-7 h-7 rounded-full object-cover"
-                              />
-                              <p>{alarm.data.moimTitle}</p>
-                            </div>
-                            <div>{alarm.data.msg}</div>
-                          </div>
-                        )
-                      )}
+                      <AlarmList
+                        alarms={alarms}
+                        handleDeleteAlarm={handleDeleteAlarm}
+                      />
                     </div>
                   </div>
                 </div>
