@@ -7,6 +7,7 @@ import { database } from "../../../../../firebase";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import { memberModalStyle } from "../../../../../styles/ModalStyle";
+import useCheckFullMember from "../../../../../hooks/useCheckFullMember";
 
 interface MasterHeaderProps {
   member: MemberObjectType[];
@@ -28,33 +29,39 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
   detail,
 }) => {
   const [isMemberList, setIsMemberList] = useState(true);
+  const isFull = useCheckFullMember(String(moimid));
 
   const closeModal = () => {
     setIsMemberModalOpen(false);
   };
 
   const handleApproveMember = async (member: MemberObjectType) => {
-    const newWaitingMember = {
-      profile: member.profile,
-      name: member.name,
-      uid: member.uid,
-    };
-    const newAlarmData = {
-      type: "welcome",
-      msg: "모임에 가입되셨습니다. 모임원들과 즐거운 시간 보내세요!🎉",
-      moimTitle: detail.moimTitle,
-      moimPhoto: detail.moimPhoto,
-      moimId: moimid,
-      createdAt: new Date().toISOString(),
-    };
+    if (!isFull) {
+      const newWaitingMember = {
+        profile: member.profile,
+        name: member.name,
+        uid: member.uid,
+      };
+      const newAlarmData = {
+        type: "welcome",
+        msg: "모임에 가입되셨습니다. 모임원들과 즐거운 시간 보내세요!🎉",
+        moimTitle: detail.moimTitle,
+        moimPhoto: detail.moimPhoto,
+        moimId: moimid,
+        createdAt: new Date().toISOString(),
+      };
 
-    await push(ref(database, `users/${member.uid}/alarm`), newAlarmData);
-    await update(ref(database, `moims/${moimid}/moimMember`), {
-      [member.uid]: newWaitingMember,
-    });
-    await remove(
-      ref(database, `moims/${moimid}/moimWaitingMember/${member.uid}`)
-    );
+      await push(ref(database, `users/${member.uid}/alarm`), newAlarmData);
+      await update(ref(database, `moims/${moimid}/moimMember`), {
+        [member.uid]: newWaitingMember,
+      });
+      await remove(
+        ref(database, `moims/${moimid}/moimWaitingMember/${member.uid}`)
+      );
+    } else {
+      alert("모임원이 가득 찼습니다.");
+      return;
+    }
   };
 
   const handleDeleteMember = async (member: MemberObjectType) => {

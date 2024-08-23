@@ -11,6 +11,8 @@ import MemberHeader from "../../components/common/DetailHeader/MemberHeader";
 import useMemberCount from "../../hooks/useMemberCount";
 import { cateMapping } from "../../types/Category";
 import useCheckIsToday from "../../hooks/useCheckIsToday";
+import useCheckFullMember from "../../hooks/useCheckFullMember";
+import useCheckIsPast from "../../hooks/useCheckIsPast";
 
 const MoimDetailPage = () => {
   const { moimid } = useParams();
@@ -22,6 +24,9 @@ const MoimDetailPage = () => {
 
   const [isMoimMember, setIsMoimMember] = useState(false);
   const [isWaitingMember, setIsWaitingMember] = useState(false);
+
+  const isFullMoim = useCheckFullMember(String(moimid));
+  const isPast = useCheckIsPast(String(detail?.moimDate));
 
   useEffect(() => {
     if (moimid) {
@@ -278,6 +283,10 @@ const MoimDetailPage = () => {
                 승인대기중
               </p>
             </>
+          ) : isPast ? (
+            <></>
+          ) : isFullMoim ? (
+            <></>
           ) : (
             <button
               className="w-48 bg-theme-color-002 text-xl font-semibold text-[#397D69] py-4 rounded-xl"

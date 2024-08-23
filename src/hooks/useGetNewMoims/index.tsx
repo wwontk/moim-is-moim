@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { MoimObjectType } from "../../types/Moim";
-import { get, limitToLast, orderByChild, query, ref } from "firebase/database";
+import {
+  limitToLast,
+  onValue,
+  orderByChild,
+  query,
+  ref,
+} from "firebase/database";
 import { database } from "../../firebase";
 
 const useGetNewMoims = () => {
@@ -12,9 +18,9 @@ const useGetNewMoims = () => {
   }, []);
 
   useEffect(() => {
-    const fetchLatestMoims = async () => {
-      try {
-        const snapshot = await get(moimsQuery);
+    const unsubscribe = onValue(
+      moimsQuery,
+      (snapshot) => {
         if (snapshot.exists()) {
           const moimList: MoimObjectType[] = Object.keys(snapshot.val()).map(
             (key) => ({
@@ -24,14 +30,15 @@ const useGetNewMoims = () => {
           );
           setNewMoims(moimList.reverse());
         } else {
-          setNewMoims([]); // 데이터가 없을 때 빈 배열 설정
+          setNewMoims([]);
         }
-      } catch (error) {
+      },
+      (error) => {
         console.error("Error fetching latest moims:", error);
       }
-    };
+    );
 
-    fetchLatestMoims();
+    return () => unsubscribe();
   }, [moimsQuery]);
 
   return newMoims;
