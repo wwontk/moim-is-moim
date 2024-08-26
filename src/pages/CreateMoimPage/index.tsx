@@ -115,7 +115,9 @@ const CreateMoimPage = () => {
     e.preventDefault();
 
     try {
-      await set(push(ref(database, "moims")), {
+      const newMoimRef = push(ref(database, "moims"));
+
+      await set(newMoimRef, {
         masterUid: currentUser.uid,
         moimTitle: title,
         moimIntro: intro,
@@ -140,6 +142,15 @@ const CreateMoimPage = () => {
         createdAt: new Date().toISOString(),
         views: 0,
       });
+
+      const moimKey = newMoimRef.key;
+
+      if (moimKey) {
+        await set(
+          ref(database, `users/${currentUser.uid}/mymoim/master/${moimKey}`),
+          true
+        );
+      }
     } catch (error) {
       console.error(error);
     } finally {

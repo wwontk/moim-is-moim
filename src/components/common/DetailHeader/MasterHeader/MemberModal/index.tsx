@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 
 import { useState } from "react";
 import { MemberObjectType, MoimObjectType } from "../../../../../types/Moim";
-import { push, ref, remove, update } from "firebase/database";
+import { push, ref, remove, set, update } from "firebase/database";
 import { database } from "../../../../../firebase";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
@@ -51,6 +51,10 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
         createdAt: new Date().toISOString(),
       };
 
+      await set(
+        ref(database, `users/${member.uid}/mymoim/member/${moimid}`),
+        true
+      );
       await push(ref(database, `users/${member.uid}/alarm`), newAlarmData);
       await update(ref(database, `moims/${moimid}/moimMember`), {
         [member.uid]: newWaitingMember,

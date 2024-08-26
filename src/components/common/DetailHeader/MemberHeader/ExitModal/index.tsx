@@ -24,6 +24,9 @@ const ExitModal: React.FC<ExitModalProps> = ({
 
   const handleExitMoim = async () => {
     await remove(
+      ref(database, `users/${currentUser.uid}/mymoim/member/${moimid}`)
+    );
+    await remove(
       ref(database, `moims/${moimid}/moimMember/${currentUser.uid}`)
     );
   };
