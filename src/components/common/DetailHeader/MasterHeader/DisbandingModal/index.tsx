@@ -39,7 +39,16 @@ const DisbandingModal: React.FC<DisbandingModalProps> = ({
       createdAt: new Date().toISOString(),
     };
     for (let i = 0; i < members.length; i++) {
-      await push(ref(database, `users/${members[i]}/alarm`), newAlarmData);
+      if (members[i] === detail.masterUid) {
+        await remove(
+          ref(database, `users/${members[i]}/mymoim/master/${moimid}`)
+        );
+      } else {
+        await push(ref(database, `users/${members[i]}/alarm`), newAlarmData);
+        await remove(
+          ref(database, `users/${members[i]}/mymoim/member/${moimid}`)
+        );
+      }
     }
     await remove(ref(database, `moims/${moimid}`));
     navigate("/", { replace: true });
