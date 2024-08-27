@@ -144,7 +144,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex justify-center mt-20 mb-20">
+      <div className="flex justify-center my-20 xs:w-[350px] xs:m-auto xs:my-20">
         <div className="flex flex-col items-center w-96">
           <div className="flex flex-col items-center mb-11">
             <div className="bg-cover bg-symbol-pattern w-12 h-12 mb-4"></div>

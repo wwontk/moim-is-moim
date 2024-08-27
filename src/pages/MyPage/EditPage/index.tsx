@@ -248,7 +248,7 @@ const EditPage = () => {
 
   return (
     <>
-      <div className="mb-14">
+      <div className="mb-14 xs:hidden">
         <p className="text-lg">기본 정보</p>
         <div className="flex h-96 justify-between mt-3">
           <div className="flex flex-col gap-7 w-[480px]">
@@ -359,10 +359,115 @@ const EditPage = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="hidden xs:flex flex-col gap-4 ">
+        <p className="text-lg">기본 정보</p>
+        <div className="h-48 bg-white rounded-2xl p-7 flex flex-col gap-8 shadow">
+          <p className="text-custom-gray-003 text-sm">프로필 사진</p>
+          <div className="flex items-center">
+            <img
+              src={`${currentUser.photoURL}`}
+              alt="profile"
+              className="w-20 h-20 rounded-full object-cover"
+            />
+            <div className="ml-10 flex">
+              <label htmlFor="newProfile" className="cursor-pointer">
+                <p className="w-20 border-2 p-2 rounded-md mr-3 text-custom-gray-004">
+                  사진 선택
+                </p>
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="newProfile"
+                id="newProfile"
+                className="hidden"
+                onChange={handleUploadImg}
+              />
+              <button
+                className="w-20 border-2 p-2 rounded-md text-custom-gray-004"
+                onClick={handleDeleteProfile}
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 bg-white rounded-2xl p-7 flex flex-col gap-8 shadow">
+          <p className="text-custom-gray-003 text-sm">닉네임</p>
+          <div className="flex justify-between gap-4 xs:gap-2">
+            <input
+              type="text"
+              value={newNickname}
+              onChange={handleChangeNewNickname}
+              className="flex-1 xs:w-1/2 bg-[#f6f6f6] rounded h-10 focus:outline-none px-3"
+            />
+            <button
+              className="border-2 h-10 rounded-md text-custom-gray-004 px-3"
+              onClick={handleChangeNickname}
+            >
+              닉네임 변경
+            </button>
+          </div>
+        </div>
+        <div className="bg-white rounded-2xl p-7 flex flex-col gap-8 shadow">
+          <p className="text-custom-gray-003 text-sm">비밀번호</p>
+          <div className="flex flex-col gap-4 items-end">
+            <input
+              type="password"
+              className="bg-[#f6f6f6] rounded h-10 w-full px-3"
+              placeholder="현재 비밀번호"
+              onChange={handleChangePassword}
+            />
+            <div className="w-full">
+              <input
+                type="password"
+                className="bg-[#f6f6f6] rounded h-10 w-full px-3"
+                placeholder="새 비밀번호"
+                onChange={handleChangeNewPassword}
+              />
+              <p
+                className={`text-sm mt-1 ${
+                  newPassword
+                    ? validPassword.status
+                      ? "text-green-500"
+                      : "text-red-600"
+                    : "text-custom-gray-002"
+                }`}
+              >
+                {newPassword
+                  ? validPassword.msg
+                  : "한글,영문,특수문자 포함 8자 이상"}
+              </p>
+            </div>
+            <div className="w-full">
+              <input
+                type="password"
+                className="bg-[#f6f6f6] rounded h-10 w-full px-3"
+                placeholder="새 비밀번호 재확인"
+                onChange={handleChangeNewPasswordCheck}
+              />
+              <p
+                className={`text-sm mt-1 ${
+                  validPasswordCheck.status ? "text-green-500" : "text-red-600"
+                }`}
+              >
+                {newPasswordCheck && validPasswordCheck.msg}
+              </p>
+            </div>
+          </div>
+          <button
+            className="w-28 p-2 border-2 rounded-md text-custom-gray-004"
+            onClick={handleChangePW}
+            disabled={!pwConfirm}
+          >
+            비밀번호 변경
+          </button>
+        </div>
+      </div>
+      <div className="xs:mt-8">
         <p className="text-lg">선택 개인정보</p>
-        <div className="flex justify-between mt-3">
-          <div className="w-80 h-36 bg-white rounded-2xl p-7 shadow">
+        <div className="flex xs:flex-col xs:items-center xs:gap-3 justify-between mt-3">
+          <div className="w-80 xs:w-full h-36 bg-white rounded-2xl p-7 shadow">
             <p className="text-custom-gray-003 text-sm">연령</p>
             <select
               name="age"
@@ -379,7 +484,7 @@ const EditPage = () => {
               ))}
             </select>
           </div>
-          <div className="w-80 h-36 bg-white rounded-2xl p-7 shadow">
+          <div className="w-80 xs:w-full h-36 bg-white rounded-2xl p-7 shadow">
             <p className="text-custom-gray-003 text-sm">성별</p>
             <select
               name="gender"
@@ -393,7 +498,7 @@ const EditPage = () => {
               <option value="female">여성</option>
             </select>
           </div>
-          <div className="w-80 h-36 bg-white rounded-2xl p-7 shadow">
+          <div className="w-80 xs:w-full h-36 bg-white rounded-2xl p-7 shadow">
             <p className="text-custom-gray-003 text-sm">거주 지역</p>
             <div className="flex gap-2">
               <select

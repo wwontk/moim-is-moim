@@ -15,13 +15,13 @@ const MoimCard = ({ moim }: { moim: MoimObjectType }) => {
   return (
     <>
       <Link to={`/moim/${moim.moimId}`}>
-        <div className="w-56 h-60 bg-white rounded-2xl shadow-sm">
-          <div className="h-24 bg-theme-color-003 rounded-t-2xl">
+        <div className="w-56 h-60 xs:w-[350px] xs:h-36 xs:flex bg-white rounded-2xl shadow-sm">
+          <div className="h-24 xs:w-28 xs:h-36 bg-theme-color-003 rounded-t-2xl xs:rounded-l-2xl xs:rounded-r-none">
             {moim.moimPhoto && (
               <img
                 src={moim.moimPhoto}
                 alt="moim+photo"
-                className="w-full h-24 object-cover rounded-t-2xl"
+                className="w-full h-24 xs:h-36 xs:rounded-l-2xl xs:rounded-r-none object-cover rounded-t-2xl"
               />
             )}
           </div>
@@ -36,8 +36,8 @@ const MoimCard = ({ moim }: { moim: MoimObjectType }) => {
                 {cateMapping[String(moim.moimCate)]}
               </div>
             </div>
-            <p className="text-xl font-bold">{moim.moimTitle}</p>
-            <div className="flex text-xs text-custom-gray-002 gap-2">
+            <p className="text-xl xs:text-base font-bold">{moim.moimTitle}</p>
+            <div className="flex text-xs xs:text-[10px] text-custom-gray-002 gap-2">
               <div className="flex items-center gap-1">
                 <BsCalendarDateFill />
                 <p>{date[0]}</p>

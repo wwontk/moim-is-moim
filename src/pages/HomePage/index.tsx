@@ -27,26 +27,28 @@ const HomePage = () => {
   return (
     <>
       <div>
-        <section className="w-[1000px] m-auto">
-          <div className="flex flex-col py-14 gap-8">
+        <section className="w-[1000px] xs:w-[350px] m-auto">
+          <div className="flex flex-col py-14 gap-8 xs:items-center">
             <p className="font-bold text-2xl text-custom-gray-001">
               오늘의 인기모임이 모임?
             </p>
-            <div className="flex justify-between">
+            <div className="flex justify-between xs:w-full xs:px-2 xs:gap-3 xs:overflow-scroll xs:py-2">
               {renderTopMoims(topMoims)}
             </div>
           </div>
         </section>
       </div>
       <div className="bg-white">
-        <section className="w-[1000px] m-auto">
-          <div className="flex flex-col py-14 gap-14">
+        <section className="w-[1000px] xs:w-[350px] m-auto">
+          <div className="flex flex-col py-14 gap-14 xs:items-center">
             <div className="flex items-center justify-between">
               <p className="font-bold text-2xl text-custom-gray-001">
                 원하는 모임을 선택하세요
               </p>
               <Link to={"/categorylist"}>
-                <p className="text-custom-gray-002 text-sm">목록 전체보기</p>
+                <p className="text-custom-gray-002 text-sm xs:hidden">
+                  목록 전체보기
+                </p>
               </Link>
             </div>
             <CategoryList />
@@ -54,8 +56,8 @@ const HomePage = () => {
         </section>
       </div>
       <div>
-        <section className="w-[1000px] m-auto">
-          <div className="flex flex-col py-14">
+        <section className="w-[1000px] xs:w-[350px] m-auto">
+          <div className="flex flex-col py-14 xs:items-center">
             <p className="font-bold text-2xl text-custom-gray-001 mb-10">
               새로 올라온 모임을 확인해보세요
             </p>

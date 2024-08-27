@@ -12,7 +12,7 @@ const CategoryLayout = () => {
   return (
     <>
       <Header />
-      <section className="w-[1000px] m-auto">
+      <section className="w-[1000px] xs:w-[350px] m-auto">
         <CategoryNav />
         <div
           onClick={handleCreateMoim}
