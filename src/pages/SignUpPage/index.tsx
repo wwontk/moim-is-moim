@@ -117,8 +117,8 @@ const SignUpPage = () => {
     try {
       const createdUser = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password
+        String(email),
+        String(password)
       );
 
       if (auth.currentUser) {
