@@ -3,7 +3,7 @@ import {
   ref as storageRef,
   uploadBytesResumable,
 } from "firebase/storage";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { FaCamera } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
@@ -27,6 +27,12 @@ interface AddressType {
 const CreateMoimPage = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser.isLogin) {
+      navigate("/login");
+    }
+  }, [currentUser.isLogin, navigate]);
 
   const fileRef = useRef<HTMLInputElement | null>(null);
 

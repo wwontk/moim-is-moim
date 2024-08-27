@@ -37,7 +37,6 @@ function App() {
           })
         );
       } else {
-        navigate("/login");
         dispatch(clearUser());
       }
     });
@@ -45,7 +44,7 @@ function App() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <>

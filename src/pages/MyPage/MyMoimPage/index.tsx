@@ -5,9 +5,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../types/User";
 import { MoimObjectType } from "../../../types/Moim";
 import MoimCard from "../../../components/ListItem/MoimCard";
+import { useNavigate } from "react-router-dom";
 
 const MyMoimPage = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser.isLogin) {
+      navigate("/login");
+    }
+  }, [currentUser.isLogin, navigate]);
+
   const [moimMemberList, setMoimMemberList] = useState<string[]>([]);
   const [moimMemberDetail, setMoimMemberDetail] = useState<MoimObjectType[]>(
     []
