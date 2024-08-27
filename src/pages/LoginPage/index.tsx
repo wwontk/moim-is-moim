@@ -25,7 +25,7 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, String(email), String(password));
     } catch (error) {
       console.log(error);
     } finally {
