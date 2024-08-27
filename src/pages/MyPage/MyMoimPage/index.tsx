@@ -12,6 +12,10 @@ const MyMoimPage = () => {
   const [moimMemberDetail, setMoimMemberDetail] = useState<MoimObjectType[]>(
     []
   );
+  const [moimMasterList, setMoimMasterList] = useState<string[]>([]);
+  const [moimMasterDetail, setMoimMasterDetail] = useState<MoimObjectType[]>(
+    []
+  );
 
   useEffect(() => {
     const moimMemberRef = ref(
@@ -66,6 +70,59 @@ const MyMoimPage = () => {
     fetchMoims();
   }, [moimMemberList]);
 
+  useEffect(() => {
+    const moimMasterRef = ref(
+      database,
+      `users/${currentUser.uid}/mymoim/master`
+    );
+
+    const unsubscribe = onValue(moimMasterRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const keys = Object.keys(snapshot.val());
+        setMoimMasterList(keys);
+      } else {
+        setMoimMasterList([]);
+      }
+    });
+    return () => unsubscribe();
+  }, [currentUser.uid]);
+
+  useEffect(() => {
+    if (moimMasterList.length === 0) return;
+
+    const fetchMoims = async () => {
+      try {
+        const moimPromises = moimMasterList.map((moimId) => {
+          return new Promise((resolve, reject) => {
+            const moimRef = ref(database, `moims/${moimId}`);
+            onValue(
+              moimRef,
+              (snapshot) => {
+                if (snapshot.exists()) {
+                  resolve({ moimId, ...snapshot.val() });
+                } else {
+                  resolve(null);
+                }
+              },
+              reject
+            );
+          });
+        });
+
+        const moimResults = await Promise.all(moimPromises);
+
+        const validMoims = moimResults.filter(
+          (moim): moim is MoimObjectType => moim !== null && moim !== undefined
+        );
+        setMoimMasterDetail(validMoims);
+      } catch (error) {
+        console.error("Error fetching moims:", error);
+      }
+    };
+
+    fetchMoims();
+  }, [moimMasterList]);
+
   const renderMoims = (moims: MoimObjectType[]) => {
     return (
       moims.length > 0 &&
@@ -75,14 +132,14 @@ const MyMoimPage = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 mb-8">
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임원인 모임</p>
           <div className="flex gap-8">{renderMoims(moimMemberDetail)}</div>
         </div>
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임장인 모임</p>
-          <div></div>
+          <div className="flex gap-8">{renderMoims(moimMasterDetail)}</div>
         </div>
       </div>
     </>
