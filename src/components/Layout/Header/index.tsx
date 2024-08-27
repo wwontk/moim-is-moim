@@ -24,6 +24,7 @@ const Header = () => {
   const [keyword, setKeyword, handleChangeKeyword] = useInput("");
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const menuToggle = () => {
     setMenuOpen((prev) => !prev);
@@ -67,6 +68,20 @@ const Header = () => {
 
   return (
     <>
+      {searchOpen && (
+        <div className="hidden xs:flex w-full bg-white h-24 items-center gap-3 p-3 fixed">
+          <form onSubmit={handleSubmit} className="flex-1 bg-main-gray rounded">
+            <input
+              type="text"
+              placeholder="오늘의 모임을 검색해보세요."
+              className="px-4 w-full h-10 bg-main-gray rounded focus:outline-none"
+              value={keyword}
+              onChange={handleChangeKeyword}
+            />
+          </form>
+          <div onClick={() => setSearchOpen(false)}>취소</div>
+        </div>
+      )}
       <div>
         <div className="shadow-five-percent xs:shadow-none bg-white">
           <div className="w-[1000px] xs:w-[350px] h-24 m-auto flex items-center justify-between">
@@ -139,7 +154,7 @@ const Header = () => {
               )}
             </div>
             <div className="hidden xs:flex gap-3 items-center">
-              <MdOutlineSearch size={24} />
+              <MdOutlineSearch size={24} onClick={() => setSearchOpen(true)} />
               <IoMenu size={24} onClick={menuToggle} />
             </div>
           </div>
