@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MemberProfile from "../../components/common/MemberProfile";
 import { child, increment, off, onValue, ref, update } from "firebase/database";
 import { database } from "../../firebase";
@@ -17,6 +17,7 @@ import useCheckIsPast from "../../hooks/useCheckIsPast";
 const MoimDetailPage = () => {
   const { moimid } = useParams();
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   const [detail, setDetail] = useState<MoimObjectType>();
   const [member, setMember] = useState<MemberObjectType[]>([]);
@@ -165,15 +166,19 @@ const MoimDetailPage = () => {
   };
 
   const handleRegister = async () => {
-    const newWaitingMember = {
-      profile: currentUser.photoURL,
-      name: currentUser.displayName,
-      uid: currentUser.uid,
-    };
+    if (currentUser.isLogin) {
+      const newWaitingMember = {
+        profile: currentUser.photoURL,
+        name: currentUser.displayName,
+        uid: currentUser.uid,
+      };
 
-    await update(ref(database, `moims/${moimid}/moimWaitingMember`), {
-      [currentUser.uid]: newWaitingMember,
-    });
+      await update(ref(database, `moims/${moimid}/moimWaitingMember`), {
+        [currentUser.uid]: newWaitingMember,
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (

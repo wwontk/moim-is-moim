@@ -15,10 +15,18 @@ import useInput from "../../../hooks/useInput";
 import { useEffect, useState } from "react";
 import { area } from "../../../data/area";
 import { years } from "../../../data/age";
+import { useNavigate } from "react-router-dom";
 
 const EditPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (!currentUser.isLogin) {
+      navigate("/login");
+    }
+  }, [currentUser.isLogin, navigate]);
 
   const [newNickname, , handleChangeNewNickname] = useInput(
     currentUser.displayName
