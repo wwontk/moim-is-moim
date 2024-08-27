@@ -18,10 +18,18 @@ const SearchPage = () => {
 
   return (
     <>
-      <section className="w-[1000px] m-auto">
-        <div className="bg-white rounded-xl border p-4 flex flex-col gap-4 mt-12">
+      <section className="w-[1000px] xs:w-[350px] m-auto">
+        <div className="xs:hidden bg-white rounded-xl border p-4 flex flex-col gap-4 mt-12">
           <p className="font-medium text-xl">검색결과</p>
-          <div className="flex gap-4">{renderMoims(filteredMoims)}</div>
+          <div className="flex gap-4 flex-wrap">
+            {renderMoims(filteredMoims)}
+          </div>
+        </div>
+        <div className="hidden xs:flex rounded-xl flex-col gap-4 mt-12">
+          <p className="font-medium text-xl">검색결과</p>
+          <div className="flex gap-4 flex-wrap">
+            {renderMoims(filteredMoims)}
+          </div>
         </div>
       </section>
     </>
