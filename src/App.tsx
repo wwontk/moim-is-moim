@@ -19,6 +19,7 @@ import MoimDetailPage from "./pages/MoimDetailPage";
 import CreateMoimPage from "./pages/CreateMoimPage";
 import UpdateMoimPage from "./pages/UpdateMoimPage";
 import MoimChattingPage from "./pages/MoimChattingPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function App() {
             path="/moim/:moimid/update"
             element={<UpdateMoimPage />}
           ></Route>
+          <Route path="/search" element={<SearchPage />}></Route>
         </Route>
         <Route element={<MyPageLayout />}>
           <Route path="/mypage/edit" element={<EditPage />}></Route>

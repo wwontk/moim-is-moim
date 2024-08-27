@@ -1,6 +1,6 @@
 import { MdOutlineSearch } from "react-icons/md";
 import { FaRegBell } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
@@ -9,14 +9,18 @@ import { useEffect, useRef, useState } from "react";
 import useGetAlarm from "../../../hooks/useGetAlarm";
 import { ref, remove } from "firebase/database";
 import AlarmList from "../../common/AlarmList";
+import useInput from "../../../hooks/useInput";
 
 const Header = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
   const alarms = useGetAlarm();
+
+  const [keyword, setKeyword, handleChangeKeyword] = useInput("");
 
   const togglePopup = () => {
     setIsPopupVisible((prev) => !prev);
@@ -48,6 +52,12 @@ const Header = () => {
     setIsPopupVisible(false);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search?keyword=${keyword}`);
+    setKeyword("");
+  };
+
   return (
     <>
       <div className="shadow-five-percent bg-white">
@@ -60,11 +70,16 @@ const Header = () => {
               </p>
             </Link>
           </div>
-          <form className="flex items-center w-[500px] h-14 bg-main-gray rounded-lg">
+          <form
+            className="flex items-center w-[500px] h-14 bg-main-gray rounded-lg"
+            onSubmit={handleSubmit}
+          >
             <input
               type="text"
               placeholder="오늘의 모임을 검색해보세요."
               className="flex-1 pl-4 bg-main-gray focus:outline-none"
+              value={keyword}
+              onChange={handleChangeKeyword}
             />
             <button className="p-2">
               <MdOutlineSearch size={24} />
