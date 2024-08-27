@@ -142,9 +142,9 @@ const MoimChattingPage = () => {
 
   return (
     <>
-      <section className="w-[1000px] m-auto">
+      <section className="w-[1000px] xs:w-[350px] m-auto">
         <div>
-          <div className="w-[1000px] h-20 bg-white fixed top-0 z-10 rounded-b-xl shadow flex items-center px-5 gap-3">
+          <div className="w-[1000px] xs:w-[350px] h-20 bg-white fixed top-0 z-10 rounded-b-xl shadow flex items-center px-5 gap-3">
             <IoArrowBack
               size={24}
               onClick={() => {
@@ -170,7 +170,7 @@ const MoimChattingPage = () => {
             {renderMessages(messages)}
             <div ref={messageEndRef}></div>
           </div>
-          <div className="w-[1000px] h-20 bg-white fixed bottom-0 rounded-t-xl shadow flex items-center">
+          <div className="w-[1000px] xs:w-[350px] h-20 bg-white fixed bottom-0 rounded-t-xl shadow flex items-center">
             <form
               className="flex w-full p-4 items-center gap-4"
               onSubmit={handleSubmit}

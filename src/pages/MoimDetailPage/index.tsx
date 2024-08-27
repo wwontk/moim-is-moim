@@ -183,7 +183,7 @@ const MoimDetailPage = () => {
 
   return (
     <>
-      <section className="w-[1000px] m-auto my-10">
+      <section className="w-[1000px] xs:w-[350px] m-auto my-10">
         {detail?.masterUid === currentUser.uid ? (
           <>
             <MasterHeader
@@ -200,22 +200,21 @@ const MoimDetailPage = () => {
           <></>
         )}
         <div className="flex flex-col gap-7 items-end">
-          <div className="w-full h-72 bg-white rounded-2xl shadow flex items-center px-12 gap-12">
+          <div className="w-full h-72 xs:h-[400px] bg-white rounded-2xl shadow flex xs:flex-col items-center xs:items-start px-12 gap-12 xs:gap-4 xs:py-12">
             {detail?.moimPhoto ? (
               <>
                 <img
                   src={detail?.moimPhoto}
                   alt="moim_photo"
-                  className="w-80 h-48 border-2 rounded-lg object-cover"
+                  className="w-80 h-48 xs:h-36 border-2 rounded-lg object-cover"
                 />
               </>
             ) : (
               <>
-                <div className="w-80 h-48 border-2 rounded-lg bg-theme-color-001"></div>
+                <div className="w-80 h-48 xs:h-36 border-2 rounded-lg bg-theme-color-001"></div>
               </>
             )}
-
-            <div className="flex-1 border-r-2 border-r-slate-200">
+            <div className="flex-1 xs:flex-none border-r-2 border-r-slate-200 xs:border-r-0">
               <div className="flex gap-2">
                 {useCheckIsToday(new Date(String(detail?.moimDate))) && (
                   <>
@@ -228,17 +227,21 @@ const MoimDetailPage = () => {
                   {cateMapping[String(detail?.moimCate)]}
                 </div>
               </div>
-              <p className="text-3xl font-bold mt-2">{detail?.moimTitle}</p>
-              <p className="text-lg mt-4">{detail?.moimIntro}</p>
+              <p className="text-3xl font-bold mt-2 xs:text-2xl">
+                {detail?.moimTitle}
+              </p>
+              <p className="text-lg mt-4 xs:text-base">{detail?.moimIntro}</p>
             </div>
             <div>
-              <div className="flex flex-col gap-7">
-                <p className="text-xl font-semibold">현재 모임 인원</p>
-                <div className="flex items-end justify-center">
-                  <p className="text-6xl font-semibold text-theme-main-color">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-7 xs:gap-3">
+                <p className="text-xl font-semibold xs:text-xl">
+                  현재 모임 인원
+                </p>
+                <div className="flex items-end justify-center xs:justify-start">
+                  <p className="text-6xl xs:text-3xl font-semibold text-theme-main-color">
                     {useMemberCount(String(moimid))}
                   </p>
-                  <p className="text-4xl font-semibold">
+                  <p className="text-2xl font-semibold">
                     /{detail?.moimMemberNum}
                   </p>
                 </div>
@@ -257,14 +260,16 @@ const MoimDetailPage = () => {
               <p className="text-2xl font-bold underline underline-offset-4 decoration-theme-main-color decoration-4">
                 모임 일정
               </p>
-              <p className="text-3xl font-semibold">{detail?.moimDate}</p>
+              <p className="text-3xl xs:text-xl font-semibold">
+                {detail?.moimDate}
+              </p>
             </div>
             <hr />
             <div className="flex flex-col gap-10">
               <p className="text-2xl font-bold underline underline-offset-4 decoration-theme-main-color decoration-4">
                 모임 장소
               </p>
-              <p className="text-3xl font-semibold">
+              <p className="text-3xl xs:text-xl font-semibold">
                 {`${detail?.moimLocation}` +
                   " " +
                   `${detail?.moimLocationDetail}`}

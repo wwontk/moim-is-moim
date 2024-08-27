@@ -3,6 +3,20 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        slideDown: {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(-100%)", opacity: "0" },
+        },
+      },
+      animation: {
+        slideDown: "slideDown 0.3s ease-out forwards",
+        slideUp: "slideUp 0.5s ease-out forwards",
+      },
       backgroundImage: {
         "symbol-pattern": "url('/src/assets/symbol.jpg')",
       },
@@ -26,6 +40,9 @@ export default {
         "ten-percent": "0 4px 4px -1px rgba(12, 12, 13, 0.1)",
         "drop-300": "0 4px 4px 0px rgba(0, 0, 0, 0.25)",
       },
+    },
+    screens: {
+      xs: { max: "767px" },
     },
   },
   plugins: [],

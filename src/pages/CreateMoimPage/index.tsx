@@ -166,22 +166,22 @@ const CreateMoimPage = () => {
 
   return (
     <>
-      <section className="w-[1000px] m-auto py-20">
+      <section className="w-[1000px] xs:w-[350px] m-auto py-20">
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           {imageUrl ? (
             <>
               <img
                 src={imageUrl}
                 alt="photo"
-                className="w-36 h-36 rounded-xl object-cover"
+                className="w-36 h-36 xs:w-20 xs:h-20 rounded-xl object-cover"
               />
             </>
           ) : (
             <div
               onClick={handleOpenFileRef}
-              className="w-36 h-36 bg-white rounded-xl flex justify-center items-center text-theme-main-color shadow"
+              className="w-36 h-36 xs:w-20 xs:h-20 bg-white rounded-xl flex justify-center items-center text-theme-main-color shadow"
             >
-              <FaCamera size={70} />
+              <FaCamera className="text-[70px] xs:text-[30px]" />
             </div>
           )}
 
@@ -240,7 +240,7 @@ const CreateMoimPage = () => {
           <div className="w-full bg-white rounded-xl shadow p-7 flex flex-col gap-2">
             <p className="text-theme-main-color font-light">모임 일정</p>
             <div className="flex gap-2">
-              <div className="border p-2 rounded flex items-center gap-2">
+              <div className="border p-2 rounded flex items-center gap-2 xs:w-1/2">
                 <BsCalendarDateFill className="text-custom-gray-002" />
                 <DatePicker
                   selected={startDate}
@@ -250,9 +250,10 @@ const CreateMoimPage = () => {
                     setStartDate(date);
                   }}
                   dateFormat="yyyy.MM.dd"
+                  className="xs:w-full"
                 />
               </div>
-              <div className="border p-2 rounded flex items-center gap-2">
+              <div className="border p-2 rounded flex items-center gap-2 xs:w-1/2">
                 <FaClock className="text-custom-gray-002" />
                 <DatePicker
                   selected={startTime}
@@ -266,6 +267,7 @@ const CreateMoimPage = () => {
                   timeIntervals={30}
                   timeCaption="Time"
                   dateFormat="H:mm"
+                  className="xs:w-full"
                 />
               </div>
             </div>
@@ -279,7 +281,9 @@ const CreateMoimPage = () => {
                 </Modal>
               )}
               <div className="flex items-center gap-2">
-                <p className="w-1/2 border-2 p-2 h-11 rounded">{address}</p>
+                <p className="w-1/2 xs:w-full border-2 p-2 h-11 rounded">
+                  {address}
+                </p>
                 <div
                   onClick={showModal}
                   className="w-11 h-11 border-2 flex items-center justify-center rounded cursor-pointer"
@@ -289,7 +293,7 @@ const CreateMoimPage = () => {
               </div>
               <input
                 type="text"
-                className="w-1/2 h-11 border-2 p-2 rounded focus:outline-none"
+                className="w-1/2 xs:w-full h-11 border-2 p-2 rounded focus:outline-none"
                 placeholder="상세 주소 입력"
                 value={addressDetail}
                 onChange={handleAddressDetail}

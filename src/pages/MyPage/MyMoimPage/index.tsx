@@ -144,11 +144,15 @@ const MyMoimPage = () => {
       <div className="flex flex-col gap-6 mb-8">
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임원인 모임</p>
-          <div className="flex gap-8">{renderMoims(moimMemberDetail)}</div>
+          <div className="flex xs:flex-col gap-8 xs:gap-4">
+            {renderMoims(moimMemberDetail)}
+          </div>
         </div>
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임장인 모임</p>
-          <div className="flex gap-8">{renderMoims(moimMasterDetail)}</div>
+          <div className="flex xs:flex-col gap-8 xs:gap-4">
+            {renderMoims(moimMasterDetail)}
+          </div>
         </div>
       </div>
     </>
