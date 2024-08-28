@@ -25,7 +25,7 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, handleDeleteAlarm }) => {
       <Link to={`/moim/${alarm.data.moimId}`}>
         <div
           key={alarm.id}
-          className="flex flex-col gap-1 shadow p-3 rounded"
+          className="flex flex-col gap-1 shadow p-3 rounded bg-white"
           onClick={() => handleDeleteAlarm(alarm.id)}
         >
           <div className="flex gap-2 items-center">

@@ -20,6 +20,7 @@ import CreateMoimPage from "./pages/CreateMoimPage";
 import UpdateMoimPage from "./pages/UpdateMoimPage";
 import MoimChattingPage from "./pages/MoimChattingPage";
 import SearchPage from "./pages/SearchPage";
+import AlarmPage from "./pages/AlarmPage";
 
 function App() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ function App() {
             element={<UpdateMoimPage />}
           ></Route>
           <Route path="/search" element={<SearchPage />}></Route>
+          <Route path="/alarm" element={<AlarmPage />}></Route>
         </Route>
         <Route element={<MyPageLayout />}>
           <Route path="/mypage/edit" element={<EditPage />}></Route>
