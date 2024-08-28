@@ -10,7 +10,7 @@ import useGetAlarm from "../../../hooks/useGetAlarm";
 import { ref, remove } from "firebase/database";
 import AlarmList from "../../common/AlarmList";
 import useInput from "../../../hooks/useInput";
-import { IoMenu } from "react-icons/io5";
+import { IoMenu, IoClose } from "react-icons/io5";
 
 const Header = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -18,6 +18,8 @@ const Header = () => {
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const alarms = useGetAlarm();
 
@@ -37,6 +39,14 @@ const Header = () => {
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
       setIsPopupVisible(false);
+    }
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target as Node) &&
+      menuButtonRef.current &&
+      !menuButtonRef.current.contains(event.target as Node)
+    ) {
+      setMenuOpen(false);
     }
   };
 
@@ -161,18 +171,34 @@ const Header = () => {
                   size={24}
                   onClick={() => setSearchOpen(true)}
                 />
-                <IoMenu size={24} onClick={menuToggle} />
+                <button
+                  ref={menuButtonRef}
+                  onClick={menuToggle}
+                  className="transition-transform duration-300"
+                >
+                  <div
+                    className={`transform transition-transform duration-300 ${
+                      menuOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                  >
+                    {menuOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+                  </div>
+                </button>
               </div>
             </div>
           </div>
         )}
-
         {menuOpen ? (
           currentUser.isLogin ? (
             <>
-              <nav className="bg-white p-4 gap-4 border-t border-t-slate-200 absolute w-full transition-transform animate-slideDown z-10">
+              <nav
+                ref={menuRef}
+                className="bg-white p-4 gap-4 border-t border-t-slate-200 absolute w-full transition-transform animate-slideDown z-10"
+              >
                 <ul className="flex flex-col gap-4">
-                  <li>알림</li>
+                  <Link to={"/alarm"}>
+                    <li>알림</li>
+                  </Link>
                   <Link to={"/mypage/edit"}>
                     <li>마이페이지</li>
                   </Link>
@@ -183,7 +209,10 @@ const Header = () => {
             </>
           ) : (
             <>
-              <nav className="bg-white p-4 gap-4 border-t border-t-slate-200 absolute w-full transition-transform animate-slideDown z-10">
+              <nav
+                ref={menuRef}
+                className="bg-white p-4 gap-4 border-t border-t-slate-200 absolute w-full transition-transform animate-slideDown z-10"
+              >
                 <ul className="flex flex-col gap-4">
                   <li>알림</li>
                   <Link to={"/login"}>
