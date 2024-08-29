@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, database } from "../../firebase";
 import { md5 } from "js-md5";
 import { ref, set } from "firebase/database";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -134,11 +135,14 @@ const SignUpPage = () => {
         email: createdUser.user.email,
         name: createdUser.user.displayName,
         profile: createdUser.user.photoURL,
+      }).then(() => {
+        toast("축하합니다! 회원가입이 되었습니다.", {
+          icon: "🎉",
+        });
+        navigate("/", { replace: true });
       });
     } catch (error) {
       console.log(error);
-    } finally {
-      navigate("/", { replace: true });
     }
   };
 

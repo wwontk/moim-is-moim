@@ -5,6 +5,7 @@ import { MdOutlineLock } from "react-icons/md";
 import { FormEvent, useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -25,11 +26,14 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, String(email), String(password));
+      await signInWithEmailAndPassword(
+        auth,
+        String(email),
+        String(password)
+      ).then(() => navigate("/", { replace: true }));
     } catch (error) {
-      console.log(error);
-    } finally {
-      navigate("/", { replace: true });
+      console.error(error);
+      toast.error("로그인에 실패하였습니다.");
     }
   };
 
