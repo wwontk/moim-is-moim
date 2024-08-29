@@ -61,7 +61,7 @@ const HomePage = () => {
             <p className="font-bold text-2xl text-custom-gray-001 mb-10">
               새로 올라온 모임을 확인해보세요
             </p>
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-7 xs:gap-3">
               {renderNewMoims(newMoims)}
             </div>
           </div>

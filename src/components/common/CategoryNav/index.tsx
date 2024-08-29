@@ -40,7 +40,7 @@ const CategoryNav = () => {
   ];
   return (
     <>
-      <nav className="h-20 flex gap-8 xs:gap-3 items-center bg-white rounded-2xl border-2 pl-9 xs:px-0 xs:justify-center mt-10 xs:flex-wrap">
+      <nav className="h-20 flex gap-8 xs:gap-3 items-center bg-white rounded-2xl border-2 pl-9 xs:px-0 xs:justify-center my-10 xs:flex-wrap">
         {navItem.map((item) => (
           <NavLink
             key={item.id}

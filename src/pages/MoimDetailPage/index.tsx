@@ -289,8 +289,8 @@ const MoimDetailPage = () => {
             <></>
           ) : isWaitingMember ? (
             <>
-              <p className="w-48 bg-custom-gray-001 text-custom-gray-002 text-xl font-semibold py-4 rounded-xl flex justify-center">
-                승인대기중
+              <p className="bg-custom-gray-001 text-custom-gray-002 text-xl xs:text-lg font-normal p-2 px-3 rounded">
+                승인 대기중
               </p>
             </>
           ) : isPast ? (
@@ -299,7 +299,7 @@ const MoimDetailPage = () => {
             <></>
           ) : (
             <button
-              className="w-48 bg-theme-color-002 text-xl font-semibold text-[#397D69] py-4 rounded-xl"
+              className="bg-[#32d998] hover:bg-[#12d68a] text-xl xs:text-lg font-normal text-white rounded p-2 px-3"
               onClick={handleRegister}
             >
               모임 가입하기
