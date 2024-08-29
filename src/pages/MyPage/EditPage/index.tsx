@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { area } from "../../../data/area";
 import { years } from "../../../data/age";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EditPage = () => {
   const dispatch = useDispatch();
@@ -32,9 +33,10 @@ const EditPage = () => {
     currentUser.displayName
   );
 
-  const [password, , handleChangePassword] = useInput("");
-  const [newPassword, , handleChangeNewPassword] = useInput("");
-  const [newPasswordCheck, , handleChangeNewPasswordCheck] = useInput("");
+  const [password, setPassword, handleChangePassword] = useInput("");
+  const [newPassword, setNewPassword, handleChangeNewPassword] = useInput("");
+  const [newPasswordCheck, setNewPasswordCheck, handleChangeNewPasswordCheck] =
+    useInput("");
   const [pwConfirm, setPwConfirm] = useState(false);
 
   const handleUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +76,8 @@ const EditPage = () => {
           dispatch(setPhotoURL(downloadURL));
           update(dbref(database, `users/${user.uid}`), {
             profile: downloadURL,
+          }).then(() => {
+            toast.success("프로필이 업데이트 되었습니다.");
           });
         });
       }
@@ -104,6 +108,8 @@ const EditPage = () => {
     dispatch(setPhotoURL(newProfile));
     update(dbref(database, `users/${user.uid}`), {
       profile: newProfile,
+    }).then(() => {
+      toast.success("프로필이 삭제되었습니다.");
     });
   };
 
@@ -111,18 +117,27 @@ const EditPage = () => {
     const user = auth.currentUser;
     if (!user) return;
 
-    updateProfile(user, {
-      displayName: newNickname,
-    });
-    dispatch(
-      setUser({
-        ...currentUser,
+    try {
+      updateProfile(user, {
         displayName: newNickname,
-      })
-    );
-    update(dbref(database, `users/${user.uid}`), {
-      name: newNickname,
-    });
+      });
+      dispatch(
+        setUser({
+          ...currentUser,
+          displayName: newNickname,
+        })
+      );
+      update(dbref(database, `users/${user.uid}`), {
+        name: newNickname,
+      }).then(() => {
+        toast("닉네임을 변경하였습니다.", {
+          icon: "👏",
+        });
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("오류로 인해 변경하지 못하였습니다.");
+    }
   };
 
   const CheckInit = {
@@ -184,11 +199,17 @@ const EditPage = () => {
     await reauthenticateWithCredential(user, credential)
       .then(() => {
         updatePassword(user, String(newPassword))
-          .then(() => {})
+          .then(() => {
+            toast.success("비밀번호가 변경되었습니다.");
+            setPassword("");
+            setNewPassword("");
+            setNewPasswordCheck("");
+          })
           .catch((error) => console.error(error));
       })
       .catch((error) => {
         console.error(error);
+        toast.error("오류가 발생하였습니다.");
       });
   };
 
@@ -243,7 +264,9 @@ const EditPage = () => {
       residence: `${city} ${district}`,
     };
     const userOptionRef = dbref(database, `users/${currentUser.uid}/option`);
-    await update(userOptionRef, newOptionData);
+    await update(userOptionRef, newOptionData).then(() => {
+      toast.success("개인정보가 저장되었습니다.");
+    });
   };
 
   return (
@@ -262,7 +285,7 @@ const EditPage = () => {
                 />
                 <div className="ml-10 flex">
                   <label htmlFor="newProfile" className="cursor-pointer">
-                    <p className="w-20 border-2 p-2 rounded-md mr-3 text-custom-gray-004">
+                    <p className="w-20 border-2 p-2 rounded-md mr-3 text-custom-gray-004 hover:border-theme-main-color hover:text-theme-main-color transition-colors duration-150">
                       사진 선택
                     </p>
                   </label>
@@ -275,7 +298,7 @@ const EditPage = () => {
                     onChange={handleUploadImg}
                   />
                   <button
-                    className="w-20 border-2 p-2 rounded-md text-custom-gray-004"
+                    className="w-20 border-2 p-2 rounded-md text-custom-gray-004  hover:border-theme-main-color hover:text-theme-main-color transition-colors duration-150"
                     onClick={handleDeleteProfile}
                   >
                     삭제
@@ -293,7 +316,7 @@ const EditPage = () => {
                   className="flex-1 bg-[#f6f6f6] rounded h-10 focus:outline-none px-3"
                 />
                 <button
-                  className="border-2 h-10 rounded-md text-custom-gray-004 px-3"
+                  className="border-2 h-10 rounded-md text-custom-gray-004 px-3  hover:border-theme-main-color hover:text-theme-main-color transition-colors duration-150"
                   onClick={handleChangeNickname}
                 >
                   닉네임 변경
@@ -308,6 +331,7 @@ const EditPage = () => {
                 type="password"
                 className="bg-[#f6f6f6] rounded h-10 w-full px-3"
                 placeholder="현재 비밀번호"
+                value={password}
                 onChange={handleChangePassword}
               />
               <div className="w-full">
@@ -315,6 +339,7 @@ const EditPage = () => {
                   type="password"
                   className="bg-[#f6f6f6] rounded h-10 w-full px-3"
                   placeholder="새 비밀번호"
+                  value={newPassword}
                   onChange={handleChangeNewPassword}
                 />
                 <p
@@ -336,6 +361,7 @@ const EditPage = () => {
                   type="password"
                   className="bg-[#f6f6f6] rounded h-10 w-full px-3"
                   placeholder="새 비밀번호 재확인"
+                  value={newPasswordCheck}
                   onChange={handleChangeNewPasswordCheck}
                 />
                 <p
@@ -535,7 +561,7 @@ const EditPage = () => {
           </div>
         </div>
         <button
-          className="border-2 h-10 rounded-md text-custom-gray-004 px-3 bg-white my-5"
+          className="border-2 h-10 rounded-md text-custom-gray-004 px-3 bg-white my-5  hover:border-theme-main-color hover:text-theme-main-color transition-colors duration-150"
           onClick={handleSubmitOptional}
         >
           개인정보 저장

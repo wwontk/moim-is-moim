@@ -49,28 +49,28 @@ const MasterHeader: React.FC<MasterHeaderProps> = ({
           className="flex flex-col gap-2 items-center relative"
           onClick={openMemberModal}
         >
-          <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
-            <FaUser size={24} />
+          <div className="w-16 h-16 xs:w-10 xs:h-10 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
+            <FaUser className="text-[24px] xs:text-[16px]" />
           </div>
-          <p className="text-xs cursor-pointer">모임원관리</p>
+          <p className="text-xs xs:text-[10px] cursor-pointer">모임원관리</p>
           {waitingMember.length > 0 && (
             <p className="w-2 h-2 bg-red-600 rounded-full absolute right-1 top-2"></p>
           )}
         </div>
         <Link to={`/moim/${moimid}/update`}>
           <div className="flex flex-col gap-2 items-center">
-            <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
-              <GrUpdate size={24} />
+            <div className="w-16 h-16 xs:w-10 xs:h-10 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
+              <GrUpdate className="text-[24px] xs:text-[16px]" />
             </div>
-            <p className="text-xs cursor-pointer">내용수정</p>
+            <p className="text-xs xs:text-[10px] cursor-pointer">내용수정</p>
           </div>
         </Link>
         <Link to={`/moim/${moimid}/chat`}>
           <div className="flex flex-col gap-2 items-center">
-            <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
-              <IoChatbubbleEllipses size={24} />
+            <div className="w-16 h-16 xs:w-10 xs:h-10 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
+              <IoChatbubbleEllipses className="text-[24px] xs:text-[16px]" />
             </div>
-            <p className="text-xs">단체채팅</p>
+            <p className="text-xs xs:text-[10px]">단체채팅</p>
           </div>
         </Link>
         <DisbandingModal
@@ -83,10 +83,10 @@ const MasterHeader: React.FC<MasterHeaderProps> = ({
           className="flex flex-col gap-2 items-center"
           onClick={openDisbandingModal}
         >
-          <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
-            <IoExitOutline size={24} />
+          <div className="w-16 h-16 xs:w-10 xs:h-10 bg-white rounded-full flex justify-center items-center hover:bg-gray-100 hover:border cursor-pointer">
+            <IoExitOutline className="text-[24px] xs:text-[16px]" />
           </div>
-          <p className="text-xs cursor-pointer">모임해체</p>
+          <p className="text-xs xs:text-[10px] cursor-pointer">모임해체</p>
         </div>
       </div>
     </>

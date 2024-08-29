@@ -27,6 +27,8 @@ interface AddressType {
 const CreateMoimPage = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+  const originalImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/whatismoim.appspot.com/o/moimPhoto%2Foriginal_img.jpg?alt=media&token=ec493f0d-6906-4276-824e-89c6758e2b19";
 
   useEffect(() => {
     if (!currentUser.isLogin) {
@@ -137,7 +139,7 @@ const CreateMoimPage = () => {
         moimText: textDetail,
         moimCate: cate,
         moimMemberNum: memberNum,
-        moimPhoto: imageUrl,
+        moimPhoto: imageUrl ? imageUrl : originalImgUrl,
         moimMember: {
           [currentUser.uid]: {
             profile: currentUser.photoURL,
@@ -173,7 +175,8 @@ const CreateMoimPage = () => {
               <img
                 src={imageUrl}
                 alt="photo"
-                className="w-36 h-36 xs:w-20 xs:h-20 rounded-xl object-cover"
+                className="w-36 h-36 xs:w-20 xs:h-20 rounded-xl object-cover cursor-pointer"
+                onClick={handleOpenFileRef}
               />
             </>
           ) : (

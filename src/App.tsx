@@ -21,6 +21,7 @@ import UpdateMoimPage from "./pages/UpdateMoimPage";
 import MoimChattingPage from "./pages/MoimChattingPage";
 import SearchPage from "./pages/SearchPage";
 import AlarmPage from "./pages/AlarmPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />}></Route>
