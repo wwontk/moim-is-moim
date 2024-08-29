@@ -3,9 +3,12 @@ import MoimCard from "../../components/ListItem/MoimCard";
 import { database } from "../../firebase";
 import { MoimObjectType } from "../../types/Moim";
 import { useCallback, useEffect, useState } from "react";
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const CategoryListPage = () => {
   const dbRef = ref(database);
+  const navigate = useNavigate();
 
   const [moims, setMoims] = useState<MoimObjectType[]>([]);
   const [sortedOption, setSortedOption] = useState<string>("all");
@@ -59,21 +62,32 @@ const CategoryListPage = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <input type="checkbox" name="myregion" id="myregion" />
-            <p>우리 지역 모임</p>
+            <p className="xs:text-sm">우리 지역 모임</p>
           </div>
-          <select
-            name="sort"
-            id="sort"
-            className="w-28 py-[10px] px-4 border-2 rounded-xl"
-            value={sortedOption}
-            onChange={handleSortedChange}
-          >
-            <option value="all">전체</option>
-            <option value="popular">인기순</option>
-            <option value="new">최신순</option>
-          </select>
+          <div className="flex gap-3">
+            <select
+              name="sort"
+              id="sort"
+              className="px-4 border rounded xs:text-sm"
+              value={sortedOption}
+              onChange={handleSortedChange}
+            >
+              <option value="all">전체</option>
+              <option value="popular">인기순</option>
+              <option value="new">최신순</option>
+            </select>
+            <button
+              className="flex items-center justify-center gap-2 p-2 rounded border bg-white border-theme-main-color"
+              onClick={() => navigate("/moim/create")}
+            >
+              <HiMiniPencilSquare className="text-theme-main-color xs:text-sm" />
+              <p className="text-theme-main-color xs:text-sm">새 모임 생성</p>
+            </button>
+          </div>
         </div>
-        <div className={`flex flex-wrap gap-8`}>{renderMoims(moims)}</div>
+        <div className={`flex flex-wrap gap-8 xs:gap-4`}>
+          {renderMoims(moims)}
+        </div>
       </div>
     </>
   );

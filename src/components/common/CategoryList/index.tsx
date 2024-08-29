@@ -53,7 +53,7 @@ const CategoryList = () => {
   ];
   return (
     <>
-      <div className="flex justify-between xs:w-full xs: gap-3 xs:overflow-scroll xs:py-2">
+      <div className="flex justify-between xs:w-full xs: gap-3 xs:overflow-scroll xs:p-2">
         {categoryItem.map((item) => (
           <Link to={item.path} key={item.id}>
             <div className="w-36 h-36 rounded-2xl shadow flex flex-col justify-center items-center">

@@ -317,9 +317,18 @@ const CreateMoimPage = () => {
               onChange={handleChangeTextDetail}
             />
           </div>
-          <button className="bg-theme-main-color text-white text-xl font-semibold w-60 p-3 rounded">
-            모임 생성하기
-          </button>
+          <div className="flex gap-4 xs:gap-2 justify-end">
+            <button
+              type="button"
+              className="bg-[#e0e0e0] hover:bg-[#d3d3d3] text-gray-500 text-lg xs:text-sm xs:w-16 font-medium w-20 p-2 rounded hover:shadow"
+              onClick={() => navigate("/categorylist")}
+            >
+              취소
+            </button>
+            <button className="bg-[#32d998] hover:bg-[#12d68a] text-white text-lg xs:text-sm xs:w-20 font-medium w-24 p-2 rounded hover:shadow">
+              모임 생성
+            </button>
+          </div>
         </form>
       </section>
     </>
