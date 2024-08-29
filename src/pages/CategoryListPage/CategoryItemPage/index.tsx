@@ -1,12 +1,15 @@
 import { equalTo, onValue, orderByChild, query, ref } from "firebase/database";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { database } from "../../../firebase";
 import { MoimObjectType } from "../../../types/Moim";
 import { useEffect, useState } from "react";
 import MoimCard from "../../../components/ListItem/MoimCard";
 import { GoAlertFill } from "react-icons/go";
+import { HiMiniPencilSquare } from "react-icons/hi2";
 
 const CategoryItemPage = () => {
+  const navigate = useNavigate();
+
   const { categoryItem } = useParams();
   const [moims, setMoims] = useState<MoimObjectType[]>([]);
   const [sortedOption, setSortedOption] = useState<string>("all");
@@ -41,7 +44,6 @@ const CategoryItemPage = () => {
       }
     });
 
-    // 컴포넌트 언마운트 시 리스너 제거
     return () => unsubscribe();
   }, [categoryItem, sortedOption]);
 
@@ -60,18 +62,30 @@ const CategoryItemPage = () => {
     <>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <p>체크박스</p>
-          <select
-            name="sort"
-            id="sort"
-            className="w-28 py-[10px] px-4 border-2 rounded-xl"
-            onChange={handleSortedChange}
-            value={sortedOption}
-          >
-            <option value="all">전체</option>
-            <option value="popular">인기순</option>
-            <option value="new">최신순</option>
-          </select>
+          <div className="flex gap-2">
+            <input type="checkbox" name="myregion" id="myregion" />
+            <p className="xs:text-sm">우리 지역 모임</p>
+          </div>
+          <div className="flex gap-3">
+            <select
+              name="sort"
+              id="sort"
+              className="px-4 border rounded xs:text-sm"
+              value={sortedOption}
+              onChange={handleSortedChange}
+            >
+              <option value="all">전체</option>
+              <option value="popular">인기순</option>
+              <option value="new">최신순</option>
+            </select>
+            <button
+              className="flex items-center justify-center gap-2 p-2 rounded border bg-white border-theme-main-color"
+              onClick={() => navigate("/moim/create")}
+            >
+              <HiMiniPencilSquare className="text-theme-main-color xs:text-sm" />
+              <p className="text-theme-main-color xs:text-sm">새 모임 생성</p>
+            </button>
+          </div>
         </div>
         <div className={`flex flex-wrap gap-8 items-center`}>
           {renderMoims(moims)}
