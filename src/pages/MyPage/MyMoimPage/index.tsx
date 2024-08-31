@@ -145,13 +145,29 @@ const MyMoimPage = () => {
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임원인 모임</p>
           <div className="flex xs:flex-col gap-8 xs:gap-4">
-            {renderMoims(moimMemberDetail)}
+            {moimMemberDetail.length > 0 ? (
+              renderMoims(moimMemberDetail)
+            ) : (
+              <>
+                <div className="p-3 xs:w-[350px] xs:h-36 xs:flex xs:justify-center xs:items-center bg-white rounded-2xl shadow-sm text-gray-400">
+                  <p>해당하는 모임이 존재하지 않습니다 😂</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <p className="font-semibold text-2xl">내가 모임장인 모임</p>
           <div className="flex xs:flex-col gap-8 xs:gap-4">
-            {renderMoims(moimMasterDetail)}
+            {moimMasterDetail.length > 0 ? (
+              renderMoims(moimMasterDetail)
+            ) : (
+              <>
+                <div className="p-3 xs:w-[350px] xs:h-36 xs:flex xs:justify-center xs:items-center bg-white rounded-2xl shadow-sm text-gray-400">
+                  <p>해당하는 모임이 존재하지 않습니다 😂</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
