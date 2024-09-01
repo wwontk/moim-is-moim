@@ -19,6 +19,7 @@ import { RootState } from "../../types/User";
 import moment from "moment";
 import { push, ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface AddressType {
   address: string;
@@ -101,6 +102,16 @@ const CreateMoimPage = () => {
   const [address, setAddress] = useState("");
   const [addressDetail, , handleAddressDetail] = useInput("");
 
+  const [isCreateCheck, setIsCreateCheck] = useState(false);
+
+  useEffect(() => {
+    if (title && startDate && startTime && intro && address) {
+      setIsCreateCheck(true);
+    } else {
+      setIsCreateCheck(false);
+    }
+  }, [title, startDate, startTime, address, intro]);
+
   const showModal = () => {
     setIsOpen(true);
   };
@@ -122,47 +133,51 @@ const CreateMoimPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    try {
-      const newMoimRef = push(ref(database, "moims"));
+    if (isCreateCheck) {
+      try {
+        const newMoimRef = push(ref(database, "moims"));
 
-      await set(newMoimRef, {
-        masterUid: currentUser.uid,
-        moimTitle: title,
-        moimIntro: intro,
-        moimDate: `${
-          String(moment(startDate).format("YYYY.MM.DD")) +
-          " " +
-          String(moment(startTime).format("H:mm"))
-        }`,
-        moimLocation: address,
-        moimLocationDetail: addressDetail,
-        moimText: textDetail,
-        moimCate: cate,
-        moimMemberNum: memberNum,
-        moimPhoto: imageUrl ? imageUrl : originalImgUrl,
-        moimMember: {
-          [currentUser.uid]: {
-            profile: currentUser.photoURL,
-            name: currentUser.displayName,
-            uid: currentUser.uid,
+        await set(newMoimRef, {
+          masterUid: currentUser.uid,
+          moimTitle: title,
+          moimIntro: intro,
+          moimDate: `${
+            String(moment(startDate).format("YYYY.MM.DD")) +
+            " " +
+            String(moment(startTime).format("H:mm"))
+          }`,
+          moimLocation: address,
+          moimLocationDetail: addressDetail,
+          moimText: textDetail,
+          moimCate: cate,
+          moimMemberNum: memberNum,
+          moimPhoto: imageUrl ? imageUrl : originalImgUrl,
+          moimMember: {
+            [currentUser.uid]: {
+              profile: currentUser.photoURL,
+              name: currentUser.displayName,
+              uid: currentUser.uid,
+            },
           },
-        },
-        createdAt: new Date().toISOString(),
-        views: 0,
-      });
+          createdAt: new Date().toISOString(),
+          views: 0,
+        });
 
-      const moimKey = newMoimRef.key;
+        const moimKey = newMoimRef.key;
 
-      if (moimKey) {
-        await set(
-          ref(database, `users/${currentUser.uid}/mymoim/master/${moimKey}`),
-          true
-        );
+        if (moimKey) {
+          await set(
+            ref(database, `users/${currentUser.uid}/mymoim/master/${moimKey}`),
+            true
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        navigate("/categorylist", { replace: true });
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      navigate("/categorylist", { replace: true });
+    } else {
+      toast.error("제목, 일정, 장소, 한줄소개를 필수로 작성해주세요.");
     }
   };
 
@@ -182,7 +197,7 @@ const CreateMoimPage = () => {
           ) : (
             <div
               onClick={handleOpenFileRef}
-              className="w-36 h-36 xs:w-20 xs:h-20 bg-white rounded-xl flex justify-center items-center text-theme-main-color shadow"
+              className="w-36 h-36 cursor-pointer xs:w-20 xs:h-20 bg-white rounded-xl flex justify-center items-center text-theme-main-color shadow"
             >
               <FaCamera className="text-[70px] xs:text-[30px]" />
             </div>
