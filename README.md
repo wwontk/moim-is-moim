@@ -7,6 +7,8 @@
 - [프로젝트 소개](#프로젝트-소개)
 - [사용 기술 스택](#사용-기술-스택)
 - [주요 기능](#주요-기능)
+- [Demo GIF](#demo-gif)
+- [트러블 슈팅](#트러블-슈팅)
 
 ## 프로젝트 소개
 💬 "이번주 토요일 배드민턴 같이 칠 사람 구해요..." <br>
@@ -37,8 +39,41 @@
 - <b>실시간 인기 모임 및 신규 모임 확인</b><br>
 현재 인기 있는 모임과 새로 올라온 모임을 실시간으로 확인할 수 있습니다. 이를 통해 다양한 모임에 쉽게 접근하고 참여할 수 있습니다.
 
+- <b>검색 기능</b><br>
+키워드를 입력하여 원하는 모임을 검색할 수 있습니다. 관심 있는 주제나 활동에 맞는 모임을 쉽게 찾아볼 수 있습니다.
+
 - <b>내가 가입한 모임 관리</b><br>
 내가 가입한 모임만 따로 확인할 수 있어, 참여 중인 모임을 쉽게 관리할 수 있습니다. 모임의 일정이나 소식을 놓치지 않고 체크할 수 있습니다.
 
 - <b>알림 기능</b><br>
 모임 가입, 해체 등의 중요한 이벤트가 발생했을 때 실시간으로 알림을 받아볼 수 있습니다. 이를 통해 모임 관련 중요한 정보를 빠르게 확인할 수 있습니다.
+
+## Demo GIF
+
+| 회원가입 | 로그인 | 홈화면 |
+|:-:|:-:|:-:|
+|<img src="https://github.com/user-attachments/assets/8fa15f49-1b63-4bd5-bb31-1023b3bf906a" width="200px"></img> | <img src="https://github.com/user-attachments/assets/99b305af-1965-43f3-b51e-425f3c915319" width="200px"></img>   | <img src="https://github.com/user-attachments/assets/8c7480ca-2e2e-45a6-bf08-7b1372e43634" width="200px"></img>   |
+| 회원가입을 할 수 있어요 | 로그인을 할 수 있어요 | 홈화면에서 인기모임과<br> 새로운 모임을 확인할 수 있어요<br> 카테고리 별로 확인이 가능하며 <br> 원하는대로 정렬 할 수 있어요  |
+
+| 모임생성 | 모임가입 | 모임회원 승인 |
+|:-:|:-:|:-:|
+|<img src="https://github.com/user-attachments/assets/c9d197cb-479e-42e7-a769-aed1a5db97e7" width="200px"></img> | <img src="https://github.com/user-attachments/assets/e0351b58-15f1-4082-aa5d-6723b7e947b9" width="200px"></img>   | <img src="https://github.com/user-attachments/assets/642bc222-4cd4-41bf-b98d-9893694540fb" width="200px"></img>   |
+| 원하는 모임을 생성할 수 있어요 | 원하는 모임에 가입할 수 있어요 | 모임장은 원하는 모임원만<br> 승인하여 모임을 꾸릴 수 있어요  |
+
+| 모임탈퇴 | 모임해체 | 검색 |
+|:-:|:-:|:-:|
+|<img src="https://github.com/user-attachments/assets/8d1c002a-eaf3-41d3-965e-e49872c38ed8" width="200px"></img> | <img src="https://github.com/user-attachments/assets/224e0215-515d-4a4b-ba6d-f6b1f723a8ef" width="200px"></img>   | <img src="https://github.com/user-attachments/assets/1408bec7-c26e-4d20-80d9-1cb505c1fa2b" width="200px"></img>   |
+| 언제든 모임을 자유롭게<br> 탈퇴할 수 있어요 | 모임장은 모임을<br> 해체할 수 있어요 | 원하는 모임을 검색할 수 있어요  |
+
+| 알림 | 마이페이지 정보 수정 | 내 모임 모아보기 |
+|:-:|:-:|:-:|
+|<img src="https://github.com/user-attachments/assets/9c60eafa-5dd4-4ee4-98f8-7b643439ea96" width="200px"></img> | <img src="https://github.com/user-attachments/assets/7f6f30bd-d19e-4747-a181-c6e055904c8c" width="200px"></img>   | <img src="https://github.com/user-attachments/assets/0bb7836a-61f7-4bba-bf94-22067d945dee" width="200px"></img>   |
+| 모임 가입, 모임 해체시<br> 알림을 받아볼 수 있어요 | 마이페이지에서 내 정보를 <br> 수정할 수 있어요 | 내가 가입되어 있는 모임들을 <br> 모아볼 수 있어요  |
+
+| 모임 단체채팅 |
+|:-:|
+|<img src="https://github.com/user-attachments/assets/9ccdc2ae-b279-4b6f-9e08-e5ee656aab77" width="430px"></img> |
+| 모임원들과 실시간으로 단체 채팅을 할 수 있어요 |
+
+## 트러블 슈팅 
+
