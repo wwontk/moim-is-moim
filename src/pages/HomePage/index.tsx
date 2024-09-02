@@ -40,15 +40,13 @@ const HomePage = () => {
       </div>
       <div className="bg-white">
         <section className="w-[1000px] xs:w-[350px] m-auto">
-          <div className="flex flex-col py-14 gap-14 xs:items-center">
-            <div className="flex items-center justify-between">
+          <div className="flex flex-col py-14 gap-14 xs:gap-5 xs:items-center">
+            <div className="flex items-center justify-between xs:flex-col xs:gap-5">
               <p className="font-bold text-2xl text-custom-gray-001">
                 원하는 모임을 선택하세요
               </p>
               <Link to={"/categorylist"}>
-                <p className="text-custom-gray-002 text-sm xs:hidden">
-                  목록 전체보기
-                </p>
+                <p className="text-custom-gray-002 text-sm">목록 전체보기</p>
               </Link>
             </div>
             <CategoryList />
