@@ -85,9 +85,10 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
         onRequestClose={closeModal}
         ariaHideApp={false}
         style={memberModalStyle}
+        className="w-[500px] h-[600px] xs:w-[300px] xs:h-[450px] p-4 focus:outline-none"
       >
         <div className="flex flex-col gap-3">
-          <p className="text-2xl font-semibold">모임원 관리</p>
+          <p className="text-2xl xs:text-xl font-semibold">모임원 관리</p>
           <div className="flex p-4 border justify-center gap-5">
             <p
               onClick={() => {
@@ -122,18 +123,20 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
                     <img
                       src={m.profile}
                       alt={`${m.name}'s profile`}
-                      className="w-14 h-14 rounded-full object-cover"
+                      className="w-14 h-14 xs:w-10 xs:h-10 rounded-full object-cover"
                     />
-                    <p className="text-xl font-semibold flex-1">{m.name}</p>
+                    <p className="text-xl xs:text-base font-semibold flex-1">
+                      {m.name}
+                    </p>
                     {m.uid === moimMasterId ? (
                       <></>
                     ) : (
                       <>
                         <button
                           onClick={() => handleDeleteMember(m)}
-                          className="w-12 h-12 bg-badge-red-001 flex justify-center items-center text-badge-red-002 rounded"
+                          className="w-12 h-12 xs:w-8 xs:h-8 bg-badge-red-001 flex justify-center items-center text-badge-red-002 rounded"
                         >
-                          <FaTrashCan size={20} />
+                          <FaTrashCan className="text-[20px] xs:text-[15px]" />
                         </button>
                       </>
                     )}
@@ -147,21 +150,23 @@ const MemberModal: React.FC<MasterHeaderProps> = ({
                     <img
                       src={m.profile}
                       alt={`${m.name}'s profile`}
-                      className="w-14 h-14 rounded-full object-cover"
+                      className="w-14 h-14 xs:w-10 xs:h-10 rounded-full object-cover"
                     />
-                    <p className="text-xl font-semibold flex-1">{m.name}</p>
+                    <p className="text-xl xs:text-base font-semibold flex-1">
+                      {m.name}
+                    </p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleApproveMember(m)}
-                        className="w-12 h-12 bg-badge-green-001 flex justify-center items-center text-badge-green-002 rounded"
+                        className="w-12 h-12 xs:w-8 xs:h-8 bg-badge-green-001 flex justify-center items-center text-badge-green-002 rounded"
                       >
-                        <FaCheckCircle size={20} />
+                        <FaCheckCircle className="text-[20px] xs:text-[15px]" />
                       </button>
                       <button
                         onClick={() => handleDeleteApproveMember(m)}
-                        className="w-12 h-12 bg-badge-red-001 flex justify-center items-center text-badge-red-002 rounded"
+                        className="w-12 h-12 xs:w-8 xs:h-8 bg-badge-red-001 flex justify-center items-center text-badge-red-002 rounded"
                       >
-                        <FaTrashCan size={20} />
+                        <FaTrashCan className="text-[20px] xs:text-[15px]" />
                       </button>
                     </div>
                   </div>

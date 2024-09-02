@@ -9,8 +9,6 @@ export const memberModalStyle: ReactModal.Styles = {
     left: "0",
   },
   content: {
-    width: "500px",
-    height: "600px",
     zIndex: "150",
     position: "absolute",
     top: "50%",
@@ -34,8 +32,6 @@ export const exitModalStyle: ReactModal.Styles = {
     left: "0",
   },
   content: {
-    width: "500px",
-    height: "200px",
     zIndex: "150",
     position: "absolute",
     top: "50%",
@@ -59,8 +55,6 @@ export const disbandingModalStyle: ReactModal.Styles = {
     left: "0",
   },
   content: {
-    width: "500px",
-    height: "400px",
     zIndex: "150",
     position: "absolute",
     top: "50%",

@@ -61,6 +61,7 @@ const DisbandingModal: React.FC<DisbandingModalProps> = ({
         onRequestClose={closeModal}
         ariaHideApp={false}
         style={disbandingModalStyle}
+        className="w-[500px] h-[400px] xs:w-[320px] xs:h-[350px] p-4 focus:outline-none"
       >
         <div className="flex flex-col gap-3">
           <p className="text-2xl font-semibold">모임 해체</p>
