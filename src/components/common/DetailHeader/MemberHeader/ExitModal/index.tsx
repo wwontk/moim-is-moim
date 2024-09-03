@@ -38,6 +38,7 @@ const ExitModal: React.FC<ExitModalProps> = ({
         onRequestClose={closeModal}
         ariaHideApp={false}
         style={exitModalStyle}
+        className="w-[500px] h-[200px] xs:w-[320px] xs:h-[180px] p-4 focus:outline-none"
       >
         <div className="flex flex-col gap-3">
           <p className="text-2xl font-semibold">모임 탈퇴</p>
