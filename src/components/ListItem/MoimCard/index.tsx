@@ -36,7 +36,9 @@ const MoimCard = ({ moim }: { moim: MoimObjectType }) => {
                 {cateMapping[String(moim.moimCate)]}
               </div>
             </div>
-            <p className="text-xl xs:text-base font-bold">{moim.moimTitle}</p>
+            <p className="text-xl xs:text-base font-bold truncate">
+              {moim.moimTitle}
+            </p>
             <div className="flex text-xs xs:text-[10px] text-custom-gray-002 gap-2">
               <div className="flex items-center gap-1">
                 <BsCalendarDateFill />
